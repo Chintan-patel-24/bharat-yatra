@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bharat Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Mukta:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Welcome Popup with Credentials -->
+    <div class="overlay" id="welcomeOverlay"></div>
+    <div class="welcome-popup" id="welcomePopup">
+        <div class="welcome-icon">🙏</div>
+        <h2 class="welcome-title">Namaste!</h2>
+        <p class="welcome-subtitle">Welcome to Bharat App</p>
+        <div class="credentials-box">
+            <div class="credential-item">
+                <span class="credential-label">ID</span>
+                <span class="credential-value" id="credentialId">bharat</span>
+                <button class="copy-btn" onclick="copyCredential('credentialId')">📋</button>
+            </div>
+            <div class="credential-item">
+                <span class="credential-label">Password</span>
+                <span class="credential-value" id="credentialPass">bharat</span>
+                <button class="copy-btn" onclick="copyCredential('credentialPass')">📋</button>
+            </div>
+        </div>
+        <p class="welcome-note">Use these credentials to login</p>
+        <button class="welcome-btn" id="welcomeBtn">
+            <span>Let's Begin</span>
+            <span class="btn-arrow">→</span>
+        </button>
+        <div class="decorative-element left"></div>
+        <div class="decorative-element right"></div>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <div class="nav-arrows" id="navArrows">
+        <div class="nav-arrow back-arrow" onclick="handleNavigation('back')">←</div>
+        <div class="nav-arrow forward-arrow" onclick="handleNavigation('forward')">→</div>
+    </div>
+
+    <!-- Login Container -->
+    <div class="container" id="loginContainer">
+        <h1 class="title">Welcome to Bharat</h1>
+        <form class="login-form" id="loginForm">
+            <div class="input-group">
+                <label for="id">ID</label>
+                <input type="text" id="id" class="input-field" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="input-field" required>
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+    </div>
+
+    <!-- Login As Popup -->
+    <div class="popup" id="loginAsPopup">
+        <h2 class="popup-title">Login as</h2>
+        <div class="login-options">
+            <div class="option">
+                <input type="radio" id="leader" name="loginType" value="leader">
+                <label for="leader">Leader</label>
+            </div>
+            <div class="option">
+                <input type="radio" id="member" name="loginType" value="member">
+                <label for="member">Member</label>
+            </div>
+        </div>
+        <button class="login-btn" id="continueLoginBtn">Continue</button>
+    </div>
+
+    <!-- Member Strength Popup -->
+    <div class="popup" id="memberPopup">
+        <h2 class="popup-title">Select the strength of the group</h2>
+        <div class="size-options">
+            <div class="size-option" data-size="custom">Custom group Size</div>
+        </div>
+        <div class="custom-input" id="customInput">
+            <input type="number" placeholder="Enter number of members" id="customNumber">
+            <button class="login-btn" id="customContinueBtn">Continue</button>
+        </div>
+    </div>
+
+    <!-- Invite Code Popup -->
+    <div class="popup" id="invitePopup">
+        <h2 class="popup-title">Enter invite link or code</h2>
+        <input type="text" class="input-field" id="inviteCode" placeholder="Enter code">
+        <button class="login-btn" id="inviteContinueBtn">Continue</button>
+    </div>
+
+    <!-- Home Screen -->
+    <div class="home-screen" id="homeScreen">
+        <div class="members-container" id="membersContainer"></div>
+    </div>
+
+    <!-- Group Screen -->
+    <div class="group-screen" id="groupScreen">
+        <div class="group-content">
+            <h2>Group Information</h2>
+            <p>This is the group section where you can manage your group settings and view group details.</p>
+            <p>Group features will be available here in future updates.</p>
+        </div>
+    </div>
+
+    <!-- Camera Screen -->
+    <div class="camera-screen" id="cameraScreen">
+        <div class="camera-content">
+            <h2>Camera</h2>
+            <p>Use your camera to capture images or upload from your device.</p>
+            <div class="camera-options">
+                <div class="camera-option" id="takePhotoOption">Take Photo</div>
+                <div class="camera-option" id="uploadPhotoOption">Upload from Phone</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Screen -->
+    <div class="chatbot-screen" id="chatbotScreen">
+        <div class="chatbot-content">
+            <h2>Chatbot</h2>
+            <p>Chat with our AI assistant for help and information.</p>
+            <p>Chatbot features will be available here in future updates.</p>
+        </div>
+    </div>
+
+    <!-- Edit Member Popup -->
+    <div class="edit-popup" id="editPopup">
+        <span class="close-btn" onclick="closeEditPopup()">&times;</span>
+        <h2 class="popup-title">Edit Member Details</h2>
+        <input type="text" class="input-field" id="editId" placeholder="ID" readonly>
+        <input type="text" class="input-field" id="editName" placeholder="Name">
+        <input type="tel" class="input-field" id="editMobile" placeholder="Mobile Number">
+        <button class="login-btn" id="saveChangesBtn">Save Changes</button>
+    </div>
+
+    <!-- Error Popup -->
+    <div class="error-popup" id="errorPopup">
+        <p id="errorMessage">Please enter a valid number</p>
+        <button onclick="closeErrorPopup()">OK</button>
+    </div>
+
+    <!-- Camera Result Popup -->
+    <div class="camera-result-popup" id="cameraResultPopup">
+        <h3>Search Result</h3>
+        <p id="cameraResultMessage">No matches found on the internet regarding this image.</p>
+        <div class="result-buttons">
+            <button class="cancel-btn" onclick="closeCameraResultPopup()">Cancel</button>
+            <button class="retry-btn" onclick="retryCameraAction()">Try Again</button>
+        </div>
+    </div>
+
+    <!-- Camera View -->
+    <div class="camera-view" id="cameraView">
+        <video id="cameraVideo" autoplay></video>
+        <canvas id="cameraCanvas" style="display: none;"></canvas>
+        <div class="camera-controls">
+            <div class="camera-btn" id="closeCameraBtn">
+                <i>✕</i>
+            </div>
+            <div class="camera-btn capture" id="captureBtn">
+                <i>●</i>
+            </div>
+            <div class="camera-btn" id="switchCameraBtn">
+                <i>↻</i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav" id="bottomNav">
+        <div class="nav-option" id="moreOption">
+            <i>☰</i>
+            <span>More</span>
+        </div>
+        <div class="nav-option active" id="homeOption">
+            <i>🏠︎</i>
+            <span>Home</span>
+        </div>
+        <div class="nav-option" id="groupOption">
+            <i>👤</i>
+            <span>Group</span>
+        </div>
+        <div class="nav-option" id="cameraOption">
+            <i>📷</i>
+            <span>Camera</span>
+        </div>
+        <div class="nav-option" id="chatbotOption">
+            <i>🤖</i>
+            <span>Chatbot</span>
+        </div>
+    </div>
+
+    <!-- More Menu -->
+    <div class="more-menu" id="moreMenu">
+        <div class="more-menu-item login-as-option" id="loginAsOption">Wanna login again ?</div>
+        <div class="more-menu-item">Emergency Services</div>
+        <div class="more-menu-item">Drive</div>
+        <div class="more-menu-item" id="findGroupOption" style="display: none;">Find Another Group</div>
+    </div>
+
+    <!-- Hidden file input for upload functionality -->
+    <input type="file" id="uploadInput" class="hidden-input" accept="image/*">
+
+    <!-- Copy Success Toast -->
+    <div class="copy-toast" id="copyToast">Copied!</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
