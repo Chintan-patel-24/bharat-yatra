@@ -82,6 +82,24 @@
         <button class="login-btn" id="inviteContinueBtn">Continue</button>
     </div>
 
+    <!-- New Member Welcome Popup - Team Code 108 -->
+    <div class="welcome-overlay" id="memberWelcomeOverlay" style="display: none;">
+        <div class="welcome-popup">
+            <div class="welcome-icon">🤝</div>
+            <h2>Welcome to Your Team!</h2>
+            <p class="welcome-message">You've successfully logged in as a Member. Use the following team code to join your group:</p>
+            <div class="credentials-box">
+                <h3>Team Code</h3>
+                <div class="credential-item">
+                    <span class="credential-label">Team Code:</span>
+                    <span class="credential-value">108</span>
+                </div>
+            </div>
+            <button class="got-it-btn" onclick="closeMemberWelcomePopup()">Got it, Let's Continue!</button>
+            <p class="note-text">* This code is required to join your team. Share it with your team members.</p>
+        </div>
+    </div>
+
     <div class="home-screen" id="homeScreen">
         <div class="members-container" id="membersContainer"></div>
     </div>
