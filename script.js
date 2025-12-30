@@ -19,6 +19,16 @@ function closeWelcomePopup() {
     }, 300);
 }
 
+// Close member welcome popup function
+function closeMemberWelcomePopup() {
+    const memberWelcomeOverlay = document.getElementById('memberWelcomeOverlay');
+    memberWelcomeOverlay.style.opacity = '0';
+    memberWelcomeOverlay.style.transition = 'opacity 0.3s ease';
+    setTimeout(() => {
+        memberWelcomeOverlay.style.display = 'none';
+    }, 300);
+}
+
 // Navigation functions
 function handleNavigation(direction) {
     if (direction === 'back' && historyIndex > 0) {
@@ -129,11 +139,24 @@ document.getElementById('continueLoginBtn').addEventListener('click', function()
             addToHistory('memberStrength');
             showScreen('memberStrength');
         } else {
-            addToHistory('inviteCode');
-            showScreen('inviteCode');
+            // For member login, show the team code popup first
+            addToHistory('memberWelcome');
+            document.getElementById('memberWelcomeOverlay').style.display = 'flex';
+            // Add a slight delay to ensure the popup appears after the animation
+            setTimeout(() => {
+                document.getElementById('memberWelcomeOverlay').style.opacity = '1';
+            }, 10);
         }
     } else {
         showError('Please select an option');
+    }
+});
+
+// Member welcome popup handling
+document.getElementById('memberWelcomeOverlay').addEventListener('click', function(e) {
+    // Close popup when clicking outside the content
+    if (e.target === this) {
+        closeMemberWelcomePopup();
     }
 });
 
@@ -417,3 +440,10 @@ function closeErrorPopup() {
 
 // Initialize
 showScreen('login');
+
+// Add event listener for the member welcome popup
+document.getElementById('memberWelcomeOverlay').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeMemberWelcomePopup();
+    }
+});
