@@ -26,6 +26,9 @@ function closeMemberWelcomePopup() {
     memberWelcomeOverlay.style.transition = 'opacity 0.3s ease';
     setTimeout(() => {
         memberWelcomeOverlay.style.display = 'none';
+        // After closing the welcome popup, show the invite code screen for members
+        addToHistory('inviteCode');
+        showScreen('inviteCode');
     }, 300);
 }
 
